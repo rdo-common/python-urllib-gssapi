@@ -3,7 +3,7 @@
 
 Name:           python-%{sname}
 Version:        1.0.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A GSSAPI/SPNEGO authentication handler for urllib/urllib2
 
 License:        ASL 2.0
@@ -81,6 +81,9 @@ Requires:       python3-requests
 
 
 %changelog
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 1.0.1-2
 - Rebuilt for Python 3.7
 
