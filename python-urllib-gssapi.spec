@@ -36,14 +36,12 @@ behaves in the same ways.
 %package -n python2-%{sname}
 Summary:        %summary
 Requires:       python2-gssapi
-Requires:       python2-requests
 %{?python_provide:%python_provide python2-%{sname}}
 %description -n python2-%{sname} %_description
 
 %package -n python3-%{sname}
 Summary:        %summary
 Requires:       python3-gssapi
-Requires:       python3-requests
 %{?python_provide:%python_provide python3-%{sname}}
 %description -n python3-%{sname} %_description
 
@@ -81,6 +79,10 @@ Requires:       python3-requests
 
 
 %changelog
+* Mon Sep 24 2018 Robbie Harwood <rharwood@redhat.com> - 1.0.1-4
+- Drop requirement on python-requests
+- Resolves: #1631938
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
