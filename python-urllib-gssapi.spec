@@ -3,7 +3,7 @@
 
 Name:           python-%{sname}
 Version:        1.0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A GSSAPI/SPNEGO authentication handler for urllib/urllib2
 
 License:        ASL 2.0
