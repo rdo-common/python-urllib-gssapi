@@ -3,7 +3,7 @@
 
 Name:           python-%{sname}
 Version:        1.0.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A GSSAPI/SPNEGO authentication handler for urllib/urllib2
 
 License:        ASL 2.0
@@ -15,16 +15,10 @@ BuildArch:      noarch
 
 BuildRequires:  git-core
 
-BuildRequires:  python2-devel
-BuildRequires:  python2-gssapi
-BuildRequires:  python2-nose
-BuildRequires:  python2-setuptools
-
 BuildRequires:  python3-devel
 BuildRequires:  python3-gssapi
 BuildRequires:  python3-nose
 BuildRequires:  python3-setuptools
-
 
 %global _description\
 urllib_gssapi is a backend for urllib.  It provides GSSAPI/SPNEGO\
@@ -33,52 +27,35 @@ behaves in the same ways.
 
 %description %_description
 
-%package -n python2-%{sname}
-Summary:        %summary
-Requires:       python2-gssapi
-%{?python_provide:%python_provide python2-%{sname}}
-%description -n python2-%{sname} %_description
-
 %package -n python3-%{sname}
 Summary:        %summary
 Requires:       python3-gssapi
 %{?python_provide:%python_provide python3-%{sname}}
 %description -n python3-%{sname} %_description
 
-
 %prep
 %autosetup -S git -n %{s_name}-%{version}
 
-
 %build
-%py2_build
 %py3_build
 
 
 %install
-# must be python3 first
 %py3_install
-%py2_install
-
 
 %check
-%{__python2} setup.py nosetests
 %{__python3} setup.py nosetests
-
-
-%files -n python2-%{sname}
-%doc README.md
-%license COPYING
-%{python2_sitelib}/%{s_name}*
-
 
 %files -n python3-%{sname}
 %doc README.md
 %license COPYING
 %{python3_sitelib}/%{s_name}*
 
-
 %changelog
+* Tue Dec 04 2018 Robbie Harwood <rharwood@redhat.com> - 1.0.1-5
+- Drop python2 subpackage
+- Resolves: #1655258
+
 * Mon Sep 24 2018 Robbie Harwood <rharwood@redhat.com> - 1.0.1-4
 - Drop requirement on python-requests
 - Resolves: #1631938
