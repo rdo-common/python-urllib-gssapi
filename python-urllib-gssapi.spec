@@ -3,7 +3,7 @@
 
 Name:           python-%{sname}
 Version:        1.0.1
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        A GSSAPI/SPNEGO authentication handler for urllib/urllib2
 
 License:        ASL 2.0
@@ -52,6 +52,9 @@ Requires:       python3-gssapi
 %{python3_sitelib}/%{s_name}*
 
 %changelog
+* Thu Oct 03 2019 Miro Hrončok <mhroncok@redhat.com> - 1.0.1-9
+- Rebuilt for Python 3.8.0rc1 (#1748018)
+
 * Mon Aug 19 2019 Miro Hrončok <mhroncok@redhat.com> - 1.0.1-8
 - Rebuilt for Python 3.8
 
