@@ -1,9 +1,17 @@
 %global sname urllib-gssapi
 %global s_name urllib_gssapi
 
+%if 0%{?fedora} || 0%{?rhel} > 7
+%bcond_with    python2
+%bcond_without python3
+%else
+%bcond_without python2
+%bcond_with    python3
+%endif
+
 Name:           python-%{sname}
 Version:        1.0.1
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        A GSSAPI/SPNEGO authentication handler for urllib/urllib2
 
 License:        ASL 2.0
@@ -12,13 +20,7 @@ Source0:        https://github.com/pythongssapi/%{sname}/releases/download/v%{ve
 BuildArch:      noarch
 
 # Patches
-
 BuildRequires:  git-core
-
-BuildRequires:  python3-devel
-BuildRequires:  python3-gssapi
-BuildRequires:  python3-nose
-BuildRequires:  python3-setuptools
 
 %global _description\
 urllib_gssapi is a backend for urllib.  It provides GSSAPI/SPNEGO\
@@ -27,31 +29,75 @@ behaves in the same ways.
 
 %description %_description
 
+%if %{with python2}
+%package -n python2-%{sname}
+Summary:        %summary
+BuildRequires:  python2-devel
+BuildRequires:  python-gssapi
+BuildRequires:  python2-nose
+BuildRequires:  python2-setuptools
+Requires:       python-gssapi
+%{?python_provide:%python_provide python2-%{sname}}
+
+%description -n python2-%{sname} %_description
+%endif
+
+%if %{with python3}
 %package -n python3-%{sname}
 Summary:        %summary
+BuildRequires:  python3-devel
+BuildRequires:  python3-gssapi
+BuildRequires:  python3-nose
+BuildRequires:  python3-setuptools
 Requires:       python3-gssapi
 %{?python_provide:%python_provide python3-%{sname}}
 %description -n python3-%{sname} %_description
+%endif
 
 %prep
 %autosetup -S git -n %{s_name}-%{version}
 
 %build
+%if %{with python2}
+%py2_build
+%endif
+%if %{with python3}
 %py3_build
-
+%endif
 
 %install
+%if %{with python2}
+%py2_install
+%endif
+%if %{with python3}
 %py3_install
+%endif
 
 %check
+%if %{with python2}
+%{__python2} setup.py nosetests
+%endif
+%if %{with python3}
 %{__python3} setup.py nosetests
+%endif
 
+%if %{with python2}
+%files -n python2-%{sname}
+%doc README.md
+%license COPYING
+%{python2_sitelib}/%{s_name}*
+%endif
+%if %{with python3}
 %files -n python3-%{sname}
 %doc README.md
 %license COPYING
 %{python3_sitelib}/%{s_name}*
+%endif
 
 %changelog
+* Fri Apr 03 2020 Javier Peña <jpena@redhat.com> - 1.0.1-11
+- Adapted for RDO, made it build for python 2 and 3
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.1-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
